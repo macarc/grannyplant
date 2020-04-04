@@ -1,0 +1,79 @@
+<html>
+    <head>
+        <title>Granny's Plants</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+            * {
+                font-family: Montserrat;
+            }
+            :root {
+                --darkest: #4D6341;
+                --darker: #4F6B47;
+                --mid: #718E5C;
+                --lighter: #80A07C;
+                --lightest: #ADC3A9;
+            }
+            
+            html, body {
+                margin: 0;
+            }
+
+            header {
+                background: var(--mid);
+                padding: 1.5rem;
+                color: white;
+            }
+
+            header a {
+                text-decoration: none;
+                color: inherit;
+                margin: 0 2rem;
+            }
+
+            header button {
+                cursor: pointer;
+                float: right;
+                margin: 0 .5rem;
+                background: var(--lighter);
+                color: white;
+                padding: .5rem;
+                border: none;
+                margin-top: -0.25rem;
+            }
+
+            main {
+                margin: 2rem;
+            }
+
+
+
+
+        </style>
+    </head>
+    <header>
+        <a href="{% url 'home' %}">Home</a>
+        {% if user.is_authenticated or request.path == "/account/login/" %}
+        <a href="{% url 'logout' %}">Log Out</a>
+        {% endif %}
+        <a href="{% url 'add_plant' %}"><button>+ Add Plant</button></a>
+        <a href="{% url 'which_area' %}"><button>+ Add Area</button></a>
+
+    </header>
+
+
+    {% if user.is_authenticated or request.path == "/account/login/" %}
+    <main>
+        {% block content %}
+        {% endblock content %}
+    </main>
+    {% else %}
+    <main>
+    <p>You need to log in!</p>
+    <a href="{% url 'login' %}">Click here</a>
+    </main>
+    {% endif %}
+
+
+</html>

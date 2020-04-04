@@ -1,0 +1,13 @@
+<p id="hint">Hold CTRL to select multiple values.</p>
+<select {% if widget.required %}required{% endif %} name="{{ widget.name }}" id="{{ widget.id }}" multiple>
+    {% for op in widget.general_areas %}
+        {% for ar in op.specific_areas.all %}
+            <option value="{{ ar.pk }}">{{ op.name }}: {{ ar.name }}</option>
+        {% endfor %}
+    {% endfor %}
+</select>
+<style>
+#hint {
+    font-size: .8rem;
+}
+</style>

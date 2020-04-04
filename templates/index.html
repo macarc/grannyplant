@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+
+th {
+    background-color: var(--darkest);
+    color: white;
+}
+
+thead * {
+    position: sticky;
+    top: .5rem;
+}
+
+tr:nth-child(even) {
+    background: var(--lightest);
+}
+
+tr:hover {
+    background: var(--lighter);
+}
+
+td, th {
+    padding: 1rem;
+}
+
+tr button {
+    cursor: pointer;
+}
+</style>
+
+<p>
+Order by:
+<select>
+    <option name="latin_name" value="latin_name">Latin name</option>
+    <option name="english_name" value="english_name">English name</option>
+    <option name="location" value="location">Location</option>
+</select>
+<button onclick="sort()">Go</button>
+</p>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const order = (new URL(window.location.href)).searchParams.get("orderby");
+        if (order) document.querySelector('select').value = order;
+    });
+
+    function sort() {
+        const val = document.querySelector('select').value;
+        if (val === 'location') {
+            window.open('/location', '_self');
+        } else if (val) {
+            const url = '/?orderby=' + val;
+            window.open(url,'_self');
+        }
+    }
+</script>
+
+
+<table>
+    <thead>
+        <th>Latin Name</th>
+        <th>English Name</th>
+        <th>Description</th>
+        <th>Size</th>
+        <th>Care</th>
+        <th>Where</th>
+        <th></th>
+    </thead>
+
+    {% for plant in all_plants %}
+
+    <tr>
+        <td>{{ plant.latin_name }}</td>
+        <td>{{ plant.english_name }}</td>
+        <td>{{ plant.description }}</td>
+        <td>{{ plant.size }}</td>
+        <td>{{ plant.care }}</td>
+        <td>
+            <ul>
+                {% for ar in plant.where.all %}
+                    <li><strong>{{ ar.general_area}}</strong>: {{ ar }}</li>
+                {% endfor %}
+            </ul>
+        </td>
+        <td>
+            <a href="{% url 'edit_plant' plant.pk %}"><button>Edit</button></a>
+        </td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+{% endblock content %}

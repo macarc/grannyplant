@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    input, textarea, select {
+        display:block;
+    }
+    ul.errorlist {
+        background: firebrick;
+        padding: 1rem;
+        color: white;
+        list-style-type: none;
+    }
+</style>
+
+
+<h1>Add {{ view.new_what }}</h1>
+
+<form action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Add" />
+</form>
+{% endblock content %}
