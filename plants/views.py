@@ -1,5 +1,6 @@
-from django.views.generic import CreateView, ListView, UpdateView, TemplateView
+from django.views.generic import CreateView, ListView, UpdateView, TemplateView, DeleteView
 from django.forms import ModelForm, modelformset_factory
+from django.urls import reverse_lazy
 from .models import Plant, Area, SpecificArea
 from .widgets import LocationWidget
 
@@ -36,6 +37,11 @@ class PlantEditView(UpdateView):
     model = Plant
     template_name = 'edit.html'
     fields = ['latin_name','english_name','description','size','care','where']
+
+class PlantDeleteView(DeleteView):
+    model = Plant
+    template_name = 'delete_plant.html'
+    success_url = reverse_lazy('home')
 
 class WhichAreaView(TemplateView):
     template_name = 'whicharea.html'
