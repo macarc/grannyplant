@@ -1,15 +1,25 @@
 <p id="hint">Hold CTRL to select multiple values.</p>
 <select {% if widget.required %}required{% endif %} name="{{ widget.name }}" id="{{ widget.id }}" multiple>
     {% for op in widget.general_areas %}
+        <option class="break" disabled></option>
+        <option class="title" disabled>{{ op.name }}:</option>
         {% for ar in op.specific_areas.all %}
-            <option value="{{ ar.pk }}">{{ op.name }}: {{ ar.name }}</option>
+            <option value="{{ ar.pk }}">{{ ar.name }}</option>
         {% endfor %}
-        <option id="break" disabled></option>
     {% endfor %}
 </select>
 <style>
 #hint {
     font-size: .8rem;
+}
+
+select {
+    padding: 1rem;
+    width: 40em;
+}
+
+.title {
+    color: inherit;
 }
 </style>
 <script>
