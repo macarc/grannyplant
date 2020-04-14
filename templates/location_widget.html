@@ -4,6 +4,7 @@
         {% for ar in op.specific_areas.all %}
             <option value="{{ ar.pk }}">{{ op.name }}: {{ ar.name }}</option>
         {% endfor %}
+        <option id="break" disabled></option>
     {% endfor %}
 </select>
 <style>
@@ -11,3 +12,9 @@
     font-size: .8rem;
 }
 </style>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let el = document.querySelector('select');
+        el.size = el.length;
+    });
+</script>
