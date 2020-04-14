@@ -34,9 +34,9 @@ class PlantCreateView(CreateView):
     new_what = 'Plant'
 
 class PlantEditView(UpdateView):
+    form_class = NewPlantForm
     model = Plant
     template_name = 'edit.html'
-    fields = ['latin_name','english_name','description','size','care','where']
 
 class PlantDeleteView(DeleteView):
     model = Plant
