@@ -4,7 +4,7 @@
         <option class="break" disabled></option>
         <option class="title" disabled>{{ op.name }}:</option>
         {% for ar in op.specific_areas.all %}
-            <option value="{{ ar.pk }}">{{ ar.name }}</option>
+        <option value="{{ ar.pk }}" {% if ar.pk in widget.values %}selected{% endif %}>{{ ar.name }}</option>
         {% endfor %}
     {% endfor %}
 </select>

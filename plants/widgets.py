@@ -9,6 +9,7 @@ class LocationWidget(Widget):
     def get_context(self,name,value,attrs, renderer):
         return {'widget': {
             'name': name,
+            'values':value,
             'id': attrs['id'],
             'general_areas': Area.objects.order_by('name'),
             'required': attrs['required']
