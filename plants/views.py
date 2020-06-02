@@ -1,6 +1,8 @@
 from django.views.generic import CreateView, ListView, UpdateView, TemplateView, DeleteView
 from django.forms import ModelForm, modelformset_factory
 from django.urls import reverse_lazy
+from django.db.models.functions import Cast
+from django.db.models import CharField
 from .models import Plant, Area, SpecificArea
 from .widgets import LocationWidget
 
@@ -21,12 +23,13 @@ class PlantView(ListView):
         return Plant.objects.order_by(order)
 
 class PlantOrderByLocationView(ListView):
-    model = Area
     template_name = 'location.html'
     context_object_name = 'all_areas'
 
-    class Meta:
-        ordering = ['name', 'specific_area__name', 'specific_area__plant__latin_name']
+    def get_queryset(self):
+        return Area.objects.annotate(
+                name_field=Cast('name', CharField())
+                ).order_by('name_field')
 
 class PlantCreateView(CreateView):
     form_class = NewPlantForm
